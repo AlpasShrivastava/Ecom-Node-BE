@@ -45,9 +45,7 @@ exports.refreshToken = async (token) => {
   if (!user || user.refreshToken !== token) {
     throw new Error('Invalid refresh token');
   }
-
   const newAccessToken = generateAccessToken(user);
-
   return { accessToken: newAccessToken };
 };
 

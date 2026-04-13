@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
+
 const app = express();
 
-// Middleware to parse JSON
 app.use(express.json());
 
 // Test route
@@ -10,7 +10,15 @@ app.get("/test", (req, res) => {
 });
 
 // Auth routes
-const authRoutes = require("./modules/auth/auth.routes");
+import authRoutes from "./modules/auth/auth.routes.js";
 app.use("/api/auth", authRoutes);
 
-module.exports = app;
+// Category routes
+import categoryRoutes from "./modules/category/category.routes.js";
+app.use("/api/categories", categoryRoutes);
+
+// Product routes
+import productRoutes from "./modules/product/product.routes.js";
+app.use("/api/products", productRoutes);
+
+export default app;
