@@ -1,6 +1,6 @@
-import * as authService from "./auth.service";
+import * as authService from "./auth.service.js";
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     console.log("enter");
     const user = await authService.register(req.body);
@@ -17,7 +17,7 @@ exports.signup = async (req, res) => {
 };
 
 // LOGIN
-exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     const data = await authService.login(req.body);
 
@@ -32,7 +32,7 @@ exports.loginUser = async (req, res) => {
 };
 
 // REFRESH TOKEN
-exports.refreshToken = async (req, res) => {
+export const refreshToken = async (req, res) => {
   try {
     const { refreshToken } = req.body;
 

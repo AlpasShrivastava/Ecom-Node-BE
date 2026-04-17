@@ -1,11 +1,12 @@
-const User = require('./auth.model');
-const bcrypt = require('bcryptjs');
-const {
+import User from './auth.model.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import {
   generateAccessToken,
   generateRefreshToken
-} = require('../../common/utlis/token');
+} from '../../common/utlis/token.js';
 
-exports.register = async ({ name, email, password }) => {
+export const register = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) throw new Error('User already exists');
 
@@ -20,7 +21,7 @@ exports.register = async ({ name, email, password }) => {
   return user;
 };
 
-exports.login = async ({ email, password }) => {
+export const login = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user) throw new Error('Invalid credentials');
 
@@ -36,19 +37,18 @@ exports.login = async ({ email, password }) => {
   return { user, accessToken, refreshToken };
 };
 
-exports.refreshToken = async (token) => {
-  const jwt = require('jsonwebtoken');
-
+export const refreshToken = async (token) => {
   const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
 
   const user = await User.findById(decoded.id);
   if (!user || user.refreshToken !== token) {
     throw new Error('Invalid refresh token');
   }
+
   const newAccessToken = generateAccessToken(user);
   return { accessToken: newAccessToken };
 };
 
-exports.getProfile = async (userId) => {
+export const getProfile = async (userId) => {
   return await User.findById(userId).select('-password');
 };
