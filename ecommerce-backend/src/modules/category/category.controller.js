@@ -16,7 +16,7 @@ export const createCategory = async (req, res, next) => {
 
 export const getAllCategories = async (req, res, next) => {
   try {
-    const categories = await categoryService.getAllCategories();
+    const categories = await categoryService.getAllCategories(req.param.page,req.param.limit);
 
     return res.status(200).json({
       success: true,

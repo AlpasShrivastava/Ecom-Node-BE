@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// title,description ,price,discountPrice,category,stock,images,rating,brand
 
 const productSchema = new mongoose.Schema({
     title: {
